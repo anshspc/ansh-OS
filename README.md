@@ -36,16 +36,16 @@ It is a **full-stack AI Personal Operating System** where:
 │                                                              │
 │  Next.js 15 Frontend (TypeScript + Tailwind + Framer Motion) │
 │  ┌───────────────────────────────────────────────────────┐   │
-│  │  Dashboard │ Kanban │ Projects │ Goals │ Habits        │  │
-│  │  Notes     │ Docs   │ Calendar │ Daily Plan │ Review   │  │
+│  │  Dashboard │ Kanban │ Projects │ Goals │ Habits       │   │
+│  │  Notes     │ Docs   │ Calendar │ Daily Plan │ Review  │   │
 │  │  Analytics │ Memories │ AI Drawer │ Ctrl+K Palette    │   │
 │  └───────────────────────────────────────────────────────┘   │
 │                        │ REST + JSON                         │
 │  FastAPI Backend (Python 3.13 + SQLAlchemy 2.0 Async)        │
 │  ┌───────────────────────────────────────────────────────┐   │
-│  │  Auth │ Tasks │ Projects │ Goals │ Habits │ Notes      │  │
-│  │  Documents │ Calendar │ Daily Plans │ Weekly Reviews   │  │
-│  │  Analytics │ AI Orchestrator │ Vector Service          │  │
+│  │  Auth │ Tasks │ Projects │ Goals │ Habits │ Notes     │   │
+│  │  Documents │ Calendar │ Daily Plans │ Weekly Reviews  │   │
+│  │  Analytics │ AI Orchestrator │ Vector Service         │   │
 │  └───────────────────────────────────────────────────────┘   │
 │                        │                                     │
 │  ┌───────────┐  ┌──────────────┐  ┌─────────────────────┐    │
