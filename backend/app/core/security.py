@@ -73,3 +73,23 @@ def decode_token(token: str) -> Optional[Dict[str, Any]]:
         return payload
     except JWTError:
         return None
+def decode_refresh_token(token: str) -> Optional[Dict[str, Any]]:
+    """
+    Decode and validate that the supplied JWT is specifically
+    a refresh token.
+    """
+    payload = decode_token(token)
+
+    if payload is None:
+        return None
+
+    if payload.get("type") != "refresh":
+        return None
+
+    if not payload.get("sub"):
+        return None
+
+    if not payload.get("jti"):
+        return None
+
+    return payload

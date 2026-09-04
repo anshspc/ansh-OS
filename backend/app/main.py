@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, status
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -14,9 +15,10 @@ from app.db.session import AsyncSessionLocal, init_db
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Initializing Personalix OS Backend Engine...")
+
     await init_db()
-    
-    # Auto-seed demo dataset on startup so the app is instantly usable
+
+    # Auto-seed demo dataset on startup.
     async with AsyncSessionLocal() as session:
         try:
             await seed_demo_data(session)
@@ -24,8 +26,12 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning(f"Demo seed notice: {e}")
 
-    logger.info(f"Personalix OS running on http://{settings.HOST}:{settings.PORT}")
+    logger.info(
+        f"Personalix OS running on http://{settings.HOST}:{settings.PORT}"
+    )
+
     yield
+
     logger.info("Shutting down Personalix OS Backend...")
 
 
@@ -38,45 +44,82 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# Request ID & Performance Logging Middleware
+
+# ==========================================
+# Request Logging Middleware
+# ==========================================
 app.add_middleware(RequestLoggingMiddleware)
 
+
+# ==========================================
 # CORS Configuration
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS if isinstance(settings.CORS_ORIGINS, list) else ["*"],
-    allow_origin_regex=r"https://.*\.onrender\.com|https://.*\.vercel\.app|http://localhost(:\d+)?|http://127\.0\.0\.1(:\d+)?",
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+# ==========================================
+allowed_origins = (
+    settings.CORS_ORIGINS
+    if isinstance(settings.CORS_ORIGINS, list)
+    else []
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"https://.*\.onrender\.com|https://.*\.vercel\.app|http://localhost(:\d+)?|http://127\.0\.0\.1(:\d+)?",
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "Accept",
+        "Origin",
+        "X-Requested-With",
+        "X-Request-ID",
+    ],
+)
+
+
+# ==========================================
 # Custom Exception Handler
+# ==========================================
 @app.exception_handler(AppException)
-async def app_exception_handler(request: Request, exc: AppException):
+async def app_exception_handler(
+    request: Request,
+    exc: AppException,
+):
     return JSONResponse(
         status_code=exc.status_code,
         content={
             "error": {
                 "code": exc.code,
                 "message": exc.detail,
-                "request_id": getattr(request.state, "request_id", None),
+                "request_id": getattr(
+                    request.state,
+                    "request_id",
+                    None,
+                ),
             }
         },
         headers=exc.headers,
     )
 
 
+# ==========================================
+# Root & Diagnostic Endpoints
+# ==========================================
 @app.get("/")
 async def root():
     return {
         "app": "Personalix OS",
-        "tagline": "One intelligent operating system for managing your personal life and work.",
+        "tagline": (
+            "One intelligent operating system for managing your personal life"
+            " and work."
+        ),
         "version": "1.0.0",
         "docs": "/docs",
         "health": "/api/v1/health",
     }
 
 
-# Include API v1 Router
+# ==========================================
+# API Routers
+# ==========================================
 app.include_router(api_router, prefix="/api/v1")
