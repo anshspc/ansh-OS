@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Personalix OS Banner](https://img.shields.io/badge/Personalix-OS-6366f1?style=for-the-badge&logo=sparkles)
+![Personalix OS Banner](https://ansh-os-frontend.onrender.com/)
 ![Python](https://img.shields.io/badge/Python-3.13-3776ab?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)
