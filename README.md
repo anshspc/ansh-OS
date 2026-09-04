@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Personalix OS Banner](https://ansh-os-frontend.onrender.com/)
+![Personalix OS Banner](https://img.shields.io/badge/Personalix-OS-6366f1?style=for-the-badge&logo=sparkles)
 ![Python](https://img.shields.io/badge/Python-3.13-3776ab?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi)
 ![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs)
@@ -36,24 +36,24 @@ It is a **full-stack AI Personal Operating System** where:
 │                                                              │
 │  Next.js 15 Frontend (TypeScript + Tailwind + Framer Motion) │
 │  ┌───────────────────────────────────────────────────────┐   │
-│  │  Dashboard │ Kanban │ Projects │ Goals │ Habits        │   │
-│  │  Notes     │ Docs   │ Calendar │ Daily Plan │ Review   │   │
+│  │  Dashboard │ Kanban │ Projects │ Goals │ Habits        │  │
+│  │  Notes     │ Docs   │ Calendar │ Daily Plan │ Review   │  │
 │  │  Analytics │ Memories │ AI Drawer │ Ctrl+K Palette    │   │
 │  └───────────────────────────────────────────────────────┘   │
-│                        │ REST + JSON                          │
+│                        │ REST + JSON                         │
 │  FastAPI Backend (Python 3.13 + SQLAlchemy 2.0 Async)        │
 │  ┌───────────────────────────────────────────────────────┐   │
-│  │  Auth │ Tasks │ Projects │ Goals │ Habits │ Notes      │   │
-│  │  Documents │ Calendar │ Daily Plans │ Weekly Reviews   │   │
-│  │  Analytics │ AI Orchestrator │ Vector Service          │   │
+│  │  Auth │ Tasks │ Projects │ Goals │ Habits │ Notes      │  │
+│  │  Documents │ Calendar │ Daily Plans │ Weekly Reviews   │  │
+│  │  Analytics │ AI Orchestrator │ Vector Service          │  │
 │  └───────────────────────────────────────────────────────┘   │
-│                        │                                      │
-│  ┌───────────┐  ┌──────────────┐  ┌─────────────────────┐   │
-│  │PostgreSQL │  │  Redis Cache │  │  LLM Providers      │   │
-│  │16+pgvector│  │   7 Alpine   │  │  OpenAI / Anthropic │   │
-│  └───────────┘  └──────────────┘  │  Google Gemini      │   │
-│                                   │  Offline Heuristic  │   │
-│                                   └─────────────────────┘   │
+│                        │                                     │
+│  ┌───────────┐  ┌──────────────┐  ┌─────────────────────┐    │
+│  │PostgreSQL │  │  Redis Cache │  │  LLM Providers      │    │
+│  │16+pgvector│  │   7 Alpine   │  │  OpenAI / Anthropic │    │
+│  └───────────┘  └──────────────┘  │  Google Gemini      │    │
+│                                   │  Offline Heuristic  │    │
+│                                   └─────────────────────┘    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
