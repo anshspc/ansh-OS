@@ -17,7 +17,20 @@ import {
   WeeklyReview,
 } from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+export const getApiBase = (): string => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, "");
+  }
+  if (typeof window !== "undefined") {
+    // If running on Render frontend deployment, default to Render backend URL
+    if (window.location.hostname.includes("onrender.com")) {
+      return "https://ansh-os.onrender.com";
+    }
+  }
+  return "http://localhost:8000";
+};
+
+export const API_BASE = getApiBase();
 
 class ApiClient {
   private getToken(): string | null {
@@ -48,7 +61,7 @@ class ApiClient {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    const url = `${API_BASE}/api/v1${endpoint}`;
+    const url = `${getApiBase()}/api/v1${endpoint}`;
     const response = await fetch(url, {
       ...options,
       headers,

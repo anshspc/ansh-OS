@@ -16,18 +16,67 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
+        "https://ansh-os-frontend.onrender.com",
+        "https://ansh-os.onrender.com",
     ]
 
     @field_validator("CORS_ORIGINS", mode="before")
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str) and not v.startswith("["):
-            return [i.strip() for i in v.split(",") if i.strip()]
+            origins = [i.strip() for i in v.split(",") if i.strip()]
+            # Ensure render and localhost origins are always included
+            standard_origins = [
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "http://localhost:8000",
+                "https://ansh-os-frontend.onrender.com",
+                "https://ansh-os.onrender.com",
+            ]
+            for origin in standard_origins:
+                if origin not in origins:
+                    origins.append(origin)
+            return origins
         elif isinstance(v, list):
+            standard_origins = [
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "http://localhost:8000",
+                "https://ansh-os-frontend.onrender.com",
+                "https://ansh-os.onrender.com",
+            ]
+            for origin in standard_origins:
+                if origin not in v:
+                    v.append(origin)
             return v
-        return ["http://localhost:3000", "http://127.0.0.1:3000"]
+        return [
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "http://localhost:8000",
+            "https://ansh-os-frontend.onrender.com",
+            "https://ansh-os.onrender.com",
+        ]
 
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./personalix.db"
+
+    @field_validator("DATABASE_URL", mode="before")
+    def assemble_database_url(cls, v: str) -> str:
+        if not v:
+            return "sqlite+aiosqlite:///./personalix.db"
+        # Render / standard PostgreSQL URL normalization for asyncpg
+        if v.startswith("postgres://"):
+            v = v.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif v.startswith("postgresql://") and not v.startswith("postgresql+asyncpg://"):
+            v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
+        # asyncpg does not accept ?sslmode=, it uses ?ssl=
+        if "sslmode=require" in v:
+            v = v.replace("sslmode=require", "ssl=require")
+        elif "sslmode=prefer" in v:
+            v = v.replace("sslmode=prefer", "ssl=prefer")
+        elif "sslmode=disable" in v:
+            v = v.replace("sslmode=disable", "ssl=disable")
+        return v
+
     REDIS_URL: str = "redis://localhost:6379/0"
 
     # Security

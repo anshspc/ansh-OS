@@ -19,7 +19,7 @@ import {
   VoiceSettings,
   VoiceState,
 } from "@/lib/voice";
-import { api } from "@/lib/api";
+import { api, getApiBase } from "@/lib/api";
 
 // ─── API call ────────────────────────────────────────────────────────────────
 
@@ -36,7 +36,7 @@ async function sendVoiceChat(
       : null;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/v1/voice/chat`,
+    `${getApiBase()}/api/v1/voice/chat`,
     {
       method: "POST",
       headers: {

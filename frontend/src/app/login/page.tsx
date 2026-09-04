@@ -28,9 +28,10 @@ export default function LoginPage() {
     setLoading(true);
     try {
       if (mode === "login") {
-        await api.login(email, password);
+        await api.login(email.trim(), password);
       } else {
-        await api.register(email, password, fullName);
+        const name = fullName.trim() || email.split("@")[0] || "User";
+        await api.register(email.trim(), password, name);
       }
       router.push("/dashboard");
     } catch (err: any) {
@@ -110,6 +111,7 @@ export default function LoginPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Alex Mercer"
+                    required
                     className="bg-transparent border-none outline-none text-white text-xs w-full placeholder-slate-500"
                   />
                 </div>
