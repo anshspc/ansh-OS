@@ -257,5 +257,5 @@ MIT License — free to use, modify, and showcase.
 <div align="center">
 Built with FastAPI + Next.js + PostgreSQL + pgvector + OpenAI/Anthropic/Gemini
 </div>
-MADE WITH LOTS OF LOVE AND COFFEE
+
 @anshspc
